@@ -6,7 +6,7 @@ public class InputOutput {
     private String type;
     private List<Shape> shapes;
 
-    public void InputParser(String filename){
+    public InputOutput(String filename){
         shapes = new ArrayList<>();
         parseFile(filename);
     }
@@ -21,25 +21,36 @@ public class InputOutput {
             type = br.readLine().trim();
 
             String line;
+            List<int[]> coordinates = new ArrayList<>();
+            char shapeLetter = 0;
+            int row = 0;
             while ((line = br.readLine()) != null){
                 if (line.trim().isEmpty()) continue;
 
-                char shapeLetter = line.charAt(0);
-                List<int[]> coordinates = new ArrayList<>();
-                int row = 0;
+                char firstChar = line.charAt(0);
                 
-                while ((line = br.readLine()) != null && !line.isEmpty()){
-                    char[] characters = line.toCharArray();
-                    for (int col = 0; col < characters.length; col++){
-                        if (characters[col] == shapeLetter){
-                            coordinates.add(new int[]{row, col});
-                        }
+                if (shapeLetter == 0 || firstChar != shapeLetter){
+                    if(!coordinates.isEmpty()){
+                        shapes.add(new Shape(shapeLetter, new ArrayList<>(coordinates)));
+                        coordinates.clear();
                     }
-                    row++;
+                    shapeLetter = firstChar;
+                    row = 0;
                 }
 
-                shapes.add(new Shape(shapeLetter, coordinates));
+                char[] chars = line.toCharArray();
+                for (int col = 0; col < chars. length; col++){
+                    if (chars[col] == shapeLetter){
+                        coordinates.add(new int[]{row, col});
+                    }
+                }
+                row++;
             }
+
+            if (!coordinates.isEmpty()){
+                shapes.add(new Shape(shapeLetter, new ArrayList<>(coordinates)));
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
