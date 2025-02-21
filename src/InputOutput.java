@@ -140,7 +140,8 @@ public class InputOutput {
                 String fileName = scanner.next();
 
                 String directoryPath = "test/Output/";
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath+fileName))) {
+                String extension = ".txt";
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath+fileName+extension))) {
                     writer.write(content.toString()); 
                 } catch (IOException e) {
                     System.out.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());

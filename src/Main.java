@@ -6,7 +6,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         String filename;
         System.out.print("Masukkan nama file .txt input yang berada di folder test: ");
-        filename = "test/"+ input.nextLine();
+        filename = "test/"+ input.nextLine()+".txt";
         InputOutput io = new InputOutput(filename);
 
         int n = io.getBoardRows();
