@@ -25,7 +25,7 @@ public class Board {
                 return false;
             }
 
-            if (grid[newRow][newCol] != '.'){
+            if (!isEmpty(newRow, newCol)){
                 return false;
             }
         }
@@ -49,20 +49,14 @@ public class Board {
         return false;
     }
 
-    public boolean removeShape(Shape shape, int x, int y, int rotation) {
-        if (!canPlaceShape(shape, x, y, rotation)) {
-            return false; 
+    public void removeShape(Shape shape, int x, int y, int rotation) {
+        for (int[] offset : shape.getCoords(rotation)) {
+            int newX = x + offset[0];
+            int newY = y + offset[1];
+            grid[newX][newY] = '.';
         }
-        List<int[]> shapeCoords = shape.getCoords(rotation);
-
-        for (int[] coordinates : shapeCoords){
-            int newRow = coordinates[0] + x;
-            int newCol = coordinates[1] + y;
-
-            grid[newRow][newCol] = '.';
-        }
-        return true;
     }
+    
 
     public int getRows(){
         return rows;
@@ -71,4 +65,12 @@ public class Board {
     public int getCols(){
         return cols;
     }
+
+    public char[][] getGrid(){
+        return grid;
+    }
+
+    public boolean isEmpty(int row, int col) {
+        return grid[row][col] == '.'; 
+    } 
 }

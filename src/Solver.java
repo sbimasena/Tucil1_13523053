@@ -5,37 +5,59 @@ public class Solver {
     private List<Shape> shapes;
     private int tries;
 
-    public Solver(Board board, List<Shape> shapes){
+    public Solver(Board board, List<Shape> shapes) {
         this.board = board;
         this.shapes = shapes;
         this.tries = 0;
     }
 
     public boolean solve() {
-        return solveRecursive(0);
+        return solveRecursive(new ArrayList<>(shapes), 0, 0);
     }
 
-    private boolean solveRecursive(int shapeIndex) {
-        if (shapeIndex == shapes.size()) return true; 
+    private boolean solveRecursive(List<Shape> remainingShapes, int x, int y) {
+        if (remainingShapes.isEmpty()) {
+            return true; 
+        }
 
-        Shape shape = shapes.get(shapeIndex);
+        if (x >= board.getRows()) {
+            return false;
+        }
 
-        for (int r = 0; r < 4; r++) {
-            for (int x = 0; x < board.getRows(); x++) {
-                for (int y = 0; y < board.getCols(); y++) {
-                    if (board.canPlaceShape(shape, x, y, r)) {
-                        board.placeShape(shape, x, y, r);
-                        tries++;
-                        if (solveRecursive(shapeIndex + 1)) return true;
-                        board.removeShape(shape, x, y, r);
+        int nextX = x, nextY = y + 1;
+        if (nextY >= board.getCols()) {
+            nextX = x + 1;
+            nextY = 0;
+        }
+
+        if (!board.isEmpty(x, y)) {
+            return solveRecursive(remainingShapes, nextX, nextY);
+        }
+
+        for (int i = 0; i < remainingShapes.size(); i++) {
+            Shape shape = remainingShapes.get(i);
+
+            for (int r = 0; r < shape.getTransformationCount(); r++) {
+                tries++;
+                if (board.canPlaceShape(shape, x, y, r)) {
+                    
+                    board.placeShape(shape, x, y, r);
+                    remainingShapes.remove(i);
+
+                    if (solveRecursive(remainingShapes, nextX, nextY)) {
+                        return true; 
                     }
+
+                    board.removeShape(shape, x, y, r);
+                    remainingShapes.add(i, shape);
                 }
             }
         }
-        return false;
+
+        return false; 
     }
 
-    public int getTries(){
+    public int getTries() {
         return tries;
     }
 }
