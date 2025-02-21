@@ -58,7 +58,7 @@ public class Solver {
             }
         }
 
-        return false;
+        return solveRecursive(remainingShapes, nextX, nextY);
     }
 
     public int getTries() {
