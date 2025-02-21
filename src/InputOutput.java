@@ -94,20 +94,70 @@ public class InputOutput {
         }
     }
 
-    public static void writeOutput(Board board) {
-        char[][] grid = board.getGrid();
+    public static void writeOutput(Board board, Solver solver, long time) {
+        System.out.println();
+        if(solver.found){
+            char[][] grid = board.getGrid();
 
-        for (char[] row : grid) {
-            StringBuilder outputRow = new StringBuilder();
-            for (char cell : row) {
-                if (cell == '.') {
-                    outputRow.append(cell); // Keep empty cells as normal '.'
-                } else {
-                    String color = colorMap.getOrDefault(cell, RESET);
-                    outputRow.append(color).append(cell).append(RESET);
+            StringBuilder content = new StringBuilder();
+            for (char[] row : grid) {
+                StringBuilder outputRow = new StringBuilder();
+                for (char cell : row) {
+                    if (cell == '.') {
+                        outputRow.append(cell); // Keep empty cells as normal '.'
+                    } else {
+                        String color = colorMap.getOrDefault(cell, RESET);
+                        outputRow.append(color).append(cell).append(RESET);
+                    }
+                    content.append(cell);
                 }
+                content.append("\n");
+                System.out.println(outputRow);
             }
-            System.out.println(outputRow);
+
+            System.out.println();
+            System.out.println("Waktu pencarian: " + time + " ms");
+            content.append("Waktu pencarian: " + time + " ms\n");
+            System.out.println();
+            System.out.println("Banyak kasus yang ditinjau: " + solver.getTries());
+            content.append("Banyak kasus yang ditinjau: " + solver.getTries()+ "\n");
+            System.out.println();
+
+            Scanner scanner = new Scanner(System.in);
+            String choice;
+            while (true) {
+                System.out.print("Apakah anda ingin menyimpan solusi? (ya/tidak): ");
+                choice = scanner.nextLine().trim().toLowerCase();
+                
+                if (choice.equals("ya") || choice.equals("tidak")) {
+                    break;
+                }
+                System.out.println("Input tidak valid! Harap masukkan 'ya' atau 'tidak'.");
+            }
+
+            if (choice.equals("ya")) {
+                System.out.print("Masukkan nama file untuk menyimpan hasil (namafile.txt): ");
+                String fileName = scanner.next();
+
+                String directoryPath = "test/Output/";
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath+fileName))) {
+                    writer.write(content.toString()); 
+                } catch (IOException e) {
+                    System.out.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());
+                }
+                System.out.println("Hasil berhasil disimpan ke dalam file " + fileName);
+            } else if (choice.equals("tidak")) {
+                System.out.println("Solusi tidak disimpan.");
+            }
+
+            scanner.close();
+        } else {
+            System.out.println("Tidak ada solusi yang ditemukan");
+            System.out.println();
+            System.out.println("Waktu pencarian: " + time + " ms");
+            System.out.println();
+            System.out.println("Banyak kasus yang ditinjau: " + solver.getTries());
+            System.out.println();  
         }
     }
 

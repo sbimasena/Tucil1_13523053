@@ -4,6 +4,7 @@ public class Solver {
     private Board board;
     private List<Shape> shapes;
     private int tries;
+    public boolean found = false;
 
     public Solver(Board board, List<Shape> shapes) {
         this.board = board;
@@ -12,12 +13,17 @@ public class Solver {
     }
 
     public boolean solve() {
-        return solveRecursive(new ArrayList<>(shapes), 0, 0);
+        if(solveRecursive(new ArrayList<>(shapes), 0, 0)){
+            found = true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean solveRecursive(List<Shape> remainingShapes, int x, int y) {
         if (remainingShapes.isEmpty()) {
-            return true; 
+            return true;
         }
 
         if (x >= board.getRows()) {
@@ -39,22 +45,20 @@ public class Solver {
 
             for (int r = 0; r < shape.getTransformationCount(); r++) {
                 tries++;
-                if (board.canPlaceShape(shape, x, y, r)) {
-                    
+                if (board.canPlaceShape(shape, x, y, r)) {                  
                     board.placeShape(shape, x, y, r);
                     remainingShapes.remove(i);
 
                     if (solveRecursive(remainingShapes, nextX, nextY)) {
-                        return true; 
+                        return true;  
                     }
-
                     board.removeShape(shape, x, y, r);
                     remainingShapes.add(i, shape);
                 }
             }
         }
 
-        return false; 
+        return false;
     }
 
     public int getTries() {

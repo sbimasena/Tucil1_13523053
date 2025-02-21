@@ -1,8 +1,12 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String filename = "test/puzzle.txt";
+        Scanner input = new Scanner(System.in);
+        String filename;
+        System.out.print("Masukkan nama file .txt input yang berada di folder test: ");
+        filename = "test/"+ input.nextLine();
         InputOutput io = new InputOutput(filename);
 
         int n = io.getBoardRows();
@@ -12,13 +16,13 @@ public class Main {
         Board board = new Board(n, m);
         Solver solver = new Solver(board, shapes);
 
-        //System.out.println(shapes.getTransformationCount());
+        long startTime = System.nanoTime();
 
-        if (solver.solve()) {
-            InputOutput.writeOutput(board);
-        } else {
-            System.out.println("No solution found.");
-            System.out.println(solver.getTries());
-        }
+        solver.solve();
+
+        long endTime = System.nanoTime();
+        long executionTime = (endTime - startTime)/1_000_000;
+
+        InputOutput.writeOutput(board, solver, executionTime);
     }
 }
