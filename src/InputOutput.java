@@ -53,31 +53,50 @@ public class InputOutput {
             String line;
             List<int[]> coordinates = new ArrayList<>();
             char shapeLetter = 0;
-            int row = 0;
+            int minCol = Integer.MAX_VALUE;
+            int row = 0, shapeStartRow = 0;
             while ((line = br.readLine()) != null){
                 if (line.trim().isEmpty()) continue;
 
-                char firstChar = line.charAt(0);
+                int firstNonSpaceIdx = -1;
+                for (int i = 0; i < line.length(); i++) {
+                    if (line.charAt(i) != ' ') {
+                        firstNonSpaceIdx = i;
+                        break;
+                    }
+                }
+                if (firstNonSpaceIdx == -1) continue;
+
+                char firstChar = line.charAt(firstNonSpaceIdx);
                 
                 if (shapeLetter == 0 || firstChar != shapeLetter){
                     if(!coordinates.isEmpty()){
+                        for (int[] coord: coordinates){
+                            coord[1]-= minCol;
+                        }
                         shapes.add(new Shape(shapeLetter, new ArrayList<>(coordinates)));
                         coordinates.clear();
                     }
                     shapeLetter = firstChar;
-                    row = 0;
+                    minCol = Integer.MAX_VALUE;
+                    shapeStartRow = coordinates.isEmpty() ? 0 : shapeStartRow + 1;
                 }
 
                 char[] chars = line.toCharArray();
-                for (int col = 0; col < chars. length; col++){
+                for (int col = 0; col < chars.length; col++){
                     if (chars[col] == shapeLetter){
-                        coordinates.add(new int[]{row, col});
+                        if (shapeStartRow == -1) shapeStartRow = 0;
+                        coordinates.add(new int[]{shapeStartRow, col});
+                        minCol = Math.min(minCol, col);
                     }
                 }
-                row++;
+                shapeStartRow++;
             }
 
             if (!coordinates.isEmpty()){
+                for (int[] coord: coordinates){
+                    coord[1]-= minCol;
+                }
                 shapes.add(new Shape(shapeLetter, new ArrayList<>(coordinates)));
             }
 
