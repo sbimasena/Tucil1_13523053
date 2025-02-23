@@ -10,7 +10,7 @@ IBBLL
 KKBBL
 KKKBL
 
-Waktu pencarian: 26918 ms
+Waktu pencarian: 27399 ms
 
 Banyak kasus yang ditinjau: 1366266194
 

@@ -49,9 +49,11 @@ public class Gambar {
 
         g.dispose();
 
+        String directory = "test/Output/";
+        File outputFile = new File(directory + filename);
         try {
-            String directory = "test/Output";
-            ImageIO.write(image, "png", new File(directory+filename));
+            
+            ImageIO.write(image, "png", outputFile);
             System.out.println("Grid saved as " + filename);
         } catch (Exception e) {
             e.printStackTrace();

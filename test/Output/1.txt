@@ -4,7 +4,7 @@ EEEDD
 EEFFF
 GGGFF
 
-Waktu pencarian: 4 ms
+Waktu pencarian: 3 ms
 
 Banyak kasus yang ditinjau: 6235
 
