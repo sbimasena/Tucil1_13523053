@@ -133,13 +133,13 @@ public class InputOutput {
                 content.append("\n");
                 System.out.println(outputRow);
             }
-
+            content.append("\n");
             System.out.println();
             System.out.println("Waktu pencarian: " + time + " ms");
-            content.append("Waktu pencarian: " + time + " ms\n");
+            content.append("Waktu pencarian: " + time + " ms\n\n");
             System.out.println();
             System.out.println("Banyak kasus yang ditinjau: " + solver.getTries());
-            content.append("Banyak kasus yang ditinjau: " + solver.getTries()+ "\n");
+            content.append("Banyak kasus yang ditinjau: " + solver.getTries()+ "\n\n");
             System.out.println();
 
             Scanner scanner = new Scanner(System.in);
@@ -172,12 +172,44 @@ public class InputOutput {
 
             scanner.close();
         } else {
+            StringBuilder content = new StringBuilder();
             System.out.println("Tidak ada solusi yang ditemukan");
+            content.append("Tidak ada solusi yang ditemukan\n\n");
             System.out.println();
             System.out.println("Waktu pencarian: " + time + " ms");
+            content.append("Waktu pencarian: " + time + " ms\n\n");
             System.out.println();
             System.out.println("Banyak kasus yang ditinjau: " + solver.getTries());
-            System.out.println();  
+            content.append("Banyak kasus yang ditinjau: " + solver.getTries()+ "\n\n");
+            System.out.println();
+            Scanner scanner = new Scanner(System.in);
+            String choice;
+            while (true) {
+                System.out.print("Apakah anda ingin menyimpan solusi? (ya/tidak): ");
+                choice = scanner.nextLine().trim().toLowerCase();
+                
+                if (choice.equals("ya") || choice.equals("tidak")) {
+                    break;
+                }
+                System.out.println("Input tidak valid! Harap masukkan 'ya' atau 'tidak'.");
+            }
+
+            if (choice.equals("ya")) {
+                System.out.print("Masukkan nama file untuk menyimpan hasil (namafile.txt): ");
+                String fileName = scanner.next();
+
+                String directoryPath = "test/Output/";
+                String extension = ".txt";
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(directoryPath+fileName+extension))) {
+                    writer.write(content.toString()); 
+                } catch (IOException e) {
+                    System.out.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());
+                }
+                System.out.println("Hasil berhasil disimpan ke dalam file " + fileName);
+            } else if (choice.equals("tidak")) {
+                System.out.println("Solusi tidak disimpan.");
+            }  
+            scanner.close();
         }
     }
 
