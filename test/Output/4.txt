@@ -1,0 +1,16 @@
+AAAEE
+ACGGE
+ACCGE
+FCDDE
+FFJDD
+IFJJJ
+IFHJH
+IIHHH
+IBBLL
+KKBBL
+KKKBL
+
+Waktu pencarian: 26862 ms
+
+Banyak kasus yang ditinjau: 1366266194
+

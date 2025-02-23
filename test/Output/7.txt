@@ -1,0 +1,8 @@
+.AB
+ACA
+DAE
+
+Waktu pencarian: 0 ms
+
+Banyak kasus yang ditinjau: 5
+

@@ -1,0 +1,10 @@
+ABBCC
+AABDC
+EEEDD
+EEFFF
+GGGFF
+
+Waktu pencarian: 5 ms
+
+Banyak kasus yang ditinjau: 6235
+
