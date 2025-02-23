@@ -54,7 +54,7 @@ public class InputOutput {
             List<int[]> coordinates = new ArrayList<>();
             char shapeLetter = 0;
             int minCol = Integer.MAX_VALUE;
-            int row = 0, shapeStartRow = 0;
+            int shapeStartRow = 0;
             while ((line = br.readLine()) != null){
                 if (line.trim().isEmpty()) continue;
 
@@ -123,7 +123,7 @@ public class InputOutput {
                 StringBuilder outputRow = new StringBuilder();
                 for (char cell : row) {
                     if (cell == '.') {
-                        outputRow.append(cell); // Keep empty cells as normal '.'
+                        outputRow.append(cell);
                     } else {
                         String color = colorMap.getOrDefault(cell, RESET);
                         outputRow.append(color).append(cell).append(RESET);
