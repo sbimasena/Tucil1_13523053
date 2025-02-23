@@ -165,6 +165,9 @@ public class InputOutput {
                 } catch (IOException e) {
                     System.out.println("Terjadi kesalahan saat menulis ke file: " + e.getMessage());
                 }
+
+                extension = ".png";
+                Gambar.saveImage(board.getGrid(), fileName+extension);
                 System.out.println("Hasil berhasil disimpan ke dalam file " + fileName);
             } else if (choice.equals("tidak")) {
                 System.out.println("Solusi tidak disimpan.");

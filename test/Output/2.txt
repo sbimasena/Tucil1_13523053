@@ -1,7 +1,7 @@
 AAFDD
 AGGGD
 
-Waktu pencarian: 1 ms
+Waktu pencarian: 3 ms
 
 Banyak kasus yang ditinjau: 2407
 
